@@ -1,5 +1,5 @@
 <template>
-  <div class="table">
+  <div class="table-wrapper">
   	<div class="table-header">
 	  	<md-field>
 			<label for="first-name"></label>
@@ -120,7 +120,7 @@
 </script>
 
 <style lang="scss" scoped>
-	.table {
+	.table-wrapper {
 		.md-icon {
 			margin-right: 3px;
 		}

@@ -27,8 +27,6 @@ export default {
 	.main-container {
 		background-color: #F5F6FA;
 		flex: 1;
-		.md-content {
-		}
 	}
 }
 .pos {

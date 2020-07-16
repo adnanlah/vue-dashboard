@@ -4,8 +4,8 @@
 			<div class="logo">
 				<img src="@/assets/logo.svg" alt="logo">
 			</div>
-			<div class="menu">
-				<router-link class="item" to="/">
+			<div class="routes">
+				<router-link class="item" to="/" exact>
 					<md-icon>house</md-icon>
 					Dashboard
 				</router-link>
@@ -86,7 +86,7 @@ export default {
 	& *, & * .md-icon {
 		color: rgba(255,255,255,.2);
 	}
-	.menu {
+	.routes {
 		margin: 0 0 10% 10%;
 		.item {
 			width: 100%;
