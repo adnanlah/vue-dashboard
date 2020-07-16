@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="table">
   	<div class="table-header">
 	  	<md-field>
 			<label for="first-name"></label>
@@ -30,39 +30,52 @@
 
       <md-table-row v-for="(assess, idx) in searched" :key="idx">
         <md-table-cell md-numeric>
-			<span class="score">
+			<span :class="{
+				score: true,
+				'bg-pos': assess.score < 5,
+				'bg-warn': assess.score > 5 && assess.score < 9,
+				'bg-dang': assess.score > 10,
+			}">
 				<span class="score-num">{{assess.score}}</span>
 			</span>
         </md-table-cell>
-        <md-table-cell>{{assess.name}}</md-table-cell>
+        <md-table-cell>
+        	<md-icon :class="{
+				'patient-status': true,
+				'pos': assess.status == 'active',
+				'dang': assess.status == 'hospitalized',
+				'gray': assess.status == 'discharged',
+			}">person</md-icon>
+	        {{assess.name}}
+	    </md-table-cell>
         <md-table-cell>
 	        {{assess.age}}/{{assess.gender}} <br> {{assess.dateOfBirth}}
 	    </md-table-cell>
         <md-table-cell>{{assess.assessment}}</md-table-cell>
         <md-table-cell>
-	        <div v-if="assess.keyMetrics.type == 'temp'" class="key-metric" v-for="(keyM, kmidx) in assess.keyMetrics.data" :key="kmidx">
-	        	<md-icon :class="keyM.type == 'positive' ? 'pos' : 'neg'">
+	        <div v-if="assess.keyMetrics.type == 'Covid-19'" class="key-metric" v-for="(keyM, kmidx) in assess.keyMetrics.data" :key="kmidx">
+	        	<md-icon :class="keyM.type == 'positive' ? 'pos' : 'dang'">
 		        	{{keyM.type == 'positive' ? 'show_chart' : 'show_chart'}}
 		        </md-icon>
 	        	<span>{{keyM.content}}</span>
 	        </div>
-	        <div v-if="assess.keyMetrics.type == 'observ'" class="key-metric" v-for="(keyM, kmidx) in assess.keyMetrics.data" :key="kmidx">
-	        	<md-icon :class="keyM.type == 'positive' ? 'pos' : 'neg'">
+	        <div v-if="assess.keyMetrics.type == 'Asthma'" class="key-metric" v-for="(keyM, kmidx) in assess.keyMetrics.data" :key="kmidx">
+	        	<md-icon :class="keyM.type == 'positive' ? 'pos' : 'dang'">
 		        	{{keyM.type == 'positive' ? 'thumb_up_alt' : 'thumb_down_alt'}}
 		        </md-icon>
 	        	<span>{{keyM.content}}</span>
 	        </div>
-	        <div v-if="assess.keyMetrics.type == 'notes'" class="key-metric">
+	        <div v-if="assess.keyMetrics.type == 'Family History'" class="key-metric">
 	        	<span>{{assess.keyMetrics.data.join(', ')}}</span>
 	        </div>
 	    </md-table-cell>
         <md-table-cell>
-        	<md-icon :class="assess.messages.pictures ? 'pos' : 'neg'">camera_alt</md-icon>
-        	<md-icon :class="assess.messages.message ? 'pos' : 'neg'">chat_bubble</md-icon>
+        	<md-icon :class="{pos: assess.messages.pictures}">camera_alt</md-icon>
+        	<md-icon :class="{pos: assess.messages.message}">chat_bubble</md-icon>
         </md-table-cell>
         <md-table-cell>
-        	<md-button class="md-raised" v-if="assess.following">Following</md-button>
-        	<md-button class="md-raised md-primary" v-else>Follow</md-button>
+        	<span v-if="assess.following" class="f-button f-button-following">Following</span>
+        	<span v-else class="f-button f-button-follow">Follow</span>
         </md-table-cell>
       </md-table-row>
 
@@ -107,39 +120,57 @@
 </script>
 
 <style lang="scss" scoped>
-	.table-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		.md-field {
-			width: 25%;
+	.table {
+		.md-icon {
+			margin-right: 3px;
 		}
-		.md-menu > .md-button {
+		.table-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			.md-field {
+				width: 25%;
+			}
+			.md-menu > .md-button {
+				color: #fff;
+				background-color: #0054FE !important;
+			}
+		}
+
+		.md-badge {
+			position: relative;
+		}
+		.score {
+			width: 2rem !important;
+			height: 2rem !important;
+			position: absolute;
+			left: calc(50% - 1rem) !important;
+			top: calc(50% - 1rem);
+			padding: 10px;
+			border-radius: 100%;
+			background: orange;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			text-align: center;
 			color: #fff;
-			background-color: #0054FE !important;
+		}
+		.f-button {
+			padding: .5rem 1rem;
+			border-radius: .25rem;
+		}
+		.f-button-following {
+			color: #219E6C;
+			background-color: #E9F6F1;
+		}
+		.f-button-follow {
+			color: #AAAAAA;
+			background-color: #F0F1F2;
+		}
+		.patient-status * {
+			width: 10px;
+			font-size: .25rem !important;
 		}
 	}
-	.md-badge {
-		position: relative;
-	}
-	.pos {
-		color: #39C38D !important;
-	}
-	.neg {
-		color: #FF5252 !important;
-	}
-	.score {
-		width: 2rem !important;
-		height: 2rem !important;
-		position: absolute;
-		left: calc(50% - 1rem) !important;
-		top: calc(50% - 1rem);
-		padding: 10px;
-		border-radius: 100%;
-		background: orange;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		text-align: center;
-	}
+	
 </style>

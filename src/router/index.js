@@ -10,11 +10,11 @@ Vue.use(VueRouter)
     name: 'Dashboard',
     component: Dashboard
   },
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  // }
+  {
+    path: '/messages',
+    name: 'Messages',
+    component: () => import('../views/Messages.vue')
+  }
 ]
 
 const router = new VueRouter({

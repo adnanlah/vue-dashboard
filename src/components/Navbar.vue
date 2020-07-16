@@ -5,26 +5,26 @@
 				<img src="@/assets/logo.svg" alt="logo">
 			</div>
 			<div class="menu">
-				<div class="item active">
+				<router-link class="item" to="/">
 					<md-icon>house</md-icon>
 					Dashboard
-				</div>
-				<div class="item">
+				</router-link>
+				<router-link class="item" to="messages">
 					<md-icon>message</md-icon>
 					Messages
-				</div>
-				<div class="item">
+				</router-link>
+				<router-link class="item" to="assessments">
 					<md-icon>attachment</md-icon>
 					Assessments
-				</div>
-				<div class="item">
+				</router-link>
+				<router-link class="item" to="patients">
 					<md-icon>group</md-icon>
 					Patients
-				</div>
-				<div class="item">
+				</router-link>
+				<router-link class="item" to="data">
 					<md-icon>pie_chart</md-icon>
 					Data
-				</div>
+				</router-link>
 			</div>
 			<div class="more">
 				<div class="new-patient">
@@ -83,20 +83,24 @@ export default {
 			display: block;
 		}
 	}
-	& * {
-	color: rgba(255,255,255,.2);
-
+	& *, & * .md-icon {
+		color: rgba(255,255,255,.2);
 	}
 	.menu {
 		margin: 0 0 10% 10%;
 		.item {
+			width: 100%;
 			padding: 10px 10px 10px 30px;
 			border-radius: 5px 0 0 5px;
 			margin-bottom: 5px;
-			cursor: pointer;
-			&.active {
-				color: #001C31;
+			display: block;
+			color: rgba(255,255,255,.2);
+			&.router-link-active, &.router-link-active .md-icon {
+				color: #001C31 !important;
 				background-color: #F5F6FA;
+			}
+			&:hover {
+				text-decoration: none;
 			}
 		}
 	}
@@ -108,6 +112,9 @@ export default {
 			background-color: #294052;
 			color: #fff;
 			margin-bottom: 10%;
+			.md-icon {
+				color: #fff;
+			}
 		}
 		.labo {
 			display: flex;

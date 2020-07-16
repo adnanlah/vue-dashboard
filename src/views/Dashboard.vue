@@ -1,21 +1,19 @@
 <template>
 	<div class="dashboard">
-		<div class="tabbar">
-			<div class="datebar">July 16, 2020 4:30 PM</div>
-			<Tabs :labels="labels" @click="tabClicked" :active="labels[0]"/>
-		</div>
+		<Tabbar :labels="labels" @click="tabClicked" :active="labels[0]"/>
+
 		<md-content class="tabcontent md-scrollbar">
 			<div class="stat-widgets">
 				<StatWidget :stats="allStats" v-if="filterBy == 'All'">
 		  			<template v-slot:title>PATIENTS</template>
 		  		</StatWidget>
-				<StatWidget :stats="covidStats" v-if="filterBy == 'All' || filterBy == 'Covid-19'">
+				<StatWidget :stats="covidStats" v-if="filterBy == 'All' || filterBy == 'Covid-19'" sorted>
 		  			<template v-slot:title>COVID-19</template>
 		  		</StatWidget>
-				<StatWidget :stats="asthmaStats" v-if="filterBy == 'All' || filterBy == 'Asthma'">
+				<StatWidget :stats="asthmaStats" v-if="filterBy == 'All' || filterBy == 'Asthma'" sorted>
 		  			<template v-slot:title>Asthma</template>
 		  		</StatWidget>
-				<StatWidget :stats="familyStats" v-if="filterBy == 'All' || filterBy == 'Family History'">
+				<StatWidget :stats="familyStats" v-if="filterBy == 'All' || filterBy == 'Family History'" sorted>
 		  			<template v-slot:title>Family History</template>
 		  		</StatWidget>
 			</div>
@@ -29,12 +27,12 @@
 <script>
 import StatWidget from '@/components/StatWidget.vue'
 import AssessTable from '@/components/AssessTable.vue'
-import Tabs from '@/components/Tabs.vue'
+import Tabbar from '@/components/Tabbar.vue'
 
 export default {
   name: 'Dashboard',
   components: {
-    Tabs,
+    Tabbar,
     AssessTable,
     StatWidget
   },
@@ -53,36 +51,58 @@ export default {
 		'Family History'
   	],
   	// stats should be computed but I don't have enough data to do so
-  	allStats: {
-		people: 50,
-		pending: 50,
-		redirect: 50
-	},
-  	covidStats: {
-		good: 60,
-		warning: 70,
-		danger: 80
-	},
-  	asthmaStats: {
-		good: 90,
-		warning: 150,
-		redirect: 60
-	},
-  	familyStats: {
-		good: 44,
-		pending: 77,
-	},
+  	allStats: [{
+  		type: 'population',
+		value: 20,
+	},{
+  		type: 'pending',
+		value: 40,
+	},{
+  		type: 'discharged',
+		value: 50,
+	}],
+  	covidStats: [{
+  		type: 'active',
+		value: 20,
+	},{
+  		type: 'warning',
+		value: 40,
+	},{
+  		type: 'hospitalized',
+		value: 50,
+	}],
+  	asthmaStats: [{
+  		type: 'active',
+		value: 220,
+	},{
+  		type: 'warning',
+		value: 40,
+	},{
+  		type: 'hospitalized',
+		value: 50,
+	}],
+  	familyStats: [{
+  		type: 'hospitalized',
+		value: 150,
+	},{
+  		type: 'active',
+		value: 60,
+	},{
+  		type: 'warning',
+		value: 10,
+	}],
   	assessments: [
         {
           id: 1,
-          score: 6,
+          score: 1,
           name: "Diana Reede",
+          status: 'active',
           gender: "Female",
           age: 78,
           dateOfBirth: '2/12/1942',
           assessment: 'Covid-19',
           keyMetrics: {
-          	type: 'temp',
+          	type: 'Covid-19',
           	data: [
 	          	{
 	          		type: 'negative',
@@ -103,13 +123,14 @@ export default {
         {
           id: 1,
           score: 6,
-          name: "Diana Reede",
+          name: "Jennifer Corner",
+          status: 'discharged',
           gender: "Female",
           age: 78,
           dateOfBirth: '2/12/1942',
-          assessment: 'Covid-19',
+          assessment: 'Asthma',
           keyMetrics: {
-          	type: 'observ',
+          	type: 'Asthma',
           	data: [
 	          	{
 	          		type: 'positive',
@@ -129,14 +150,15 @@ export default {
         },
         {
           id: 2,
-          score: 10,
+          score: 11,
           name: "Sam Johnson",
+          status: 'hospitalized',
           gender: "Male",
           age: 45,
           dateOfBirth: '2/12/1976',
-          assessment: 'Covid-19',
+          assessment: 'Family History',
           keyMetrics: {
-          	type: 'notes',
+          	type: 'Family History',
           	data: ['Heart disease', 'Asthma']
           },
           messages: {
@@ -155,27 +177,8 @@ export default {
 	$bord-rad: .25rem;
 
 	.dashboard {
-		flex-grow: 1;
 		height: 100vh;
-		.tabbar {
-			padding: 0 $base-spacing;
-			background-color: #fff;
-			height: 4rem;
-			display: flex;
-			flex-direction: column;
-			justify-content: space-between;
-			.datebar {
-				font-size: .75rem;
-				color: grey;
-				font-weight: 100;
-				text-align: right;
-				flex: 1;
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-			}
-			
-		}
+		
 		.tabcontent {
 			background-color: #F5F6FA;
 			padding: $base-spacing;
