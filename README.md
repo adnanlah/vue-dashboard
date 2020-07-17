@@ -1,4 +1,6 @@
-# dashboard
+# vue-dashboard
+
+The website is hosted at: https://adnanlah.github.io/vue-dashboard/
 
 ## Project setup
 ```
