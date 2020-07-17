@@ -42,9 +42,9 @@
 		<div class="account">
 			<div class="account-info">
 				<md-avatar class="avatar">
-			    	<img src="@/assets/labo.png" alt="Avatar">
+			    	<img src="@/assets/profile.png" alt="Avatar">
 			    </md-avatar>
-			    <div class="name">Valentina <br> Rossi MD</div>
+			    <div class="name">Adnan <br> Lahrech</div>
 			</div>
 			<div>
 				<md-icon>expand_more</md-icon>

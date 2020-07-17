@@ -159,7 +159,7 @@ export default {
           assessment: 'Family History',
           keyMetrics: {
           	type: 'Family History',
-          	data: ['Heart disease', 'Asthma']
+          	data: ['Heart disease', 'Asthma', 'Diabetes', 'Hypertension']
           },
           messages: {
           	pictures: true,

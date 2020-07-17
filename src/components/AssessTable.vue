@@ -71,7 +71,7 @@
 	    </md-table-cell>
         <md-table-cell>
         	<md-icon :class="{pos: assess.messages.pictures}">camera_alt</md-icon>
-        	<md-icon :class="{pos: assess.messages.message}">chat_bubble</md-icon>
+        	<md-icon :class="{pos: assess.messages.messages}">chat_bubble</md-icon>
         </md-table-cell>
         <md-table-cell>
         	<span v-if="assess.following" class="f-button f-button-following">Following</span>
